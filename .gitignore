@@ -35,7 +35,7 @@ config.json
 secrets.json
 
 # Data files and models
-data/themes/
+data/themes.py/
 data/voices/
 data/*.json
 
