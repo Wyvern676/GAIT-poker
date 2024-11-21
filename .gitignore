@@ -1,0 +1,86 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.so
+*.egg
+*.egg-info
+dist/
+build/
+*.log
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+*.virtualenv
+
+# Flask files
+instance/
+*.sqlite3
+*.db
+
+# Configuration files
+config.py
+config.json
+
+# API keys or sensitive data
+*.env
+*.key
+*.pem
+secrets.json
+
+# Data files and models
+data/themes.py/
+data/voices/
+data/*.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor or IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+*.orig
+*.sublime-project
+*.sublime-workspace
+
+# Unit test coverage files
+.coverage
+.tox/
+.pytest_cache/
+
+# Logs and reports
+logs/
+debug.log
+nohup.out
+
+# Node.js (if using npm for web-related files)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Generated files
+*.mp3
+*.wav
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Matplotlib plots or temp files
+*.svg
+*.pdf
+*.eps
+
+# Jupyter Notebook checkpoints (if applicable)
+.ipynb_checkpoints/
