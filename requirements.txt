@@ -1,6 +1,6 @@
 flask
 openai
-stable-diffusion-sdkit
-google-cloud-texttospeech
 pygame
 pytest
+python-dotenv
+OpenAI
