@@ -1,3 +1,5 @@
+import random
+from collections import Counter
 from openai import OpenAI
 
 client = OpenAI(api_key="")
@@ -49,10 +51,6 @@ while game_running:
     if user_input.lower() == "exit":
         game_running = False
 '''
-
-
-import random
-from collections import Counter
 
 # Define suits and ranks
 SUITS = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
@@ -160,17 +158,6 @@ class PokerGame:
         self.player_current_bet = 0
         self.opponent_current_bet = 0
         self.hand_terminated = False
-
-    def get_gamestate(self):
-        return "your tokens: " + str(self.opponent_tokens) + ", opponent tokens: " + str(self.player_tokens) + ", total pot size: " + str(self.pot) + ", opponent's current bet: " + str(self.player_current_bet) + ", your cards: " + str(self.opponent_hand) + ", current comunity cards: " + str(self.community_cards)
-
-
-    def reset_round(self):
-        """Reset the game state for a new round, including blinds."""
-        if self.player_tokens < 10 or self.opponent_tokens < 10:
-            print("Insufficient tokens to continue. Game over!")
-            return False
-
         self.deck = Deck()
         self.community_cards = []
         self.player_hand = []
@@ -179,6 +166,15 @@ class PokerGame:
         self.player_current_bet = 0
         self.opponent_current_bet = 0
         self.hand_terminated = False
+
+    def get_gamestate(self):
+        return "your tokens: " + str(self.opponent_tokens) + ", opponent tokens: " + str(self.player_tokens) + ", total pot size: " + str(self.pot) + ", opponent's current bet: " + str(self.player_current_bet) + ", your cards: " + str(self.opponent_hand) + ", current comunity cards: " + str(self.community_cards)
+
+    def reset_round(self):
+        """Reset the game state for a new round, including blinds."""
+        if self.player_tokens < 10 or self.opponent_tokens < 10:
+            print("Insufficient tokens to continue. Game over!")
+            return False
 
         # Collect blinds
         blind = 10

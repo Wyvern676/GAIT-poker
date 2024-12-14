@@ -1,0 +1,6 @@
+flask
+openai
+pygame
+pytest
+python-dotenv
+OpenAI
