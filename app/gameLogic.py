@@ -1,3 +1,56 @@
+from openai import OpenAI
+
+client = OpenAI(api_key="")
+# Globals
+user_input = "begin"
+game_running = True
+character_text = 'You are a futureistic robot that plays only the correct play, you know when to bluff and when to fold and follow your strict guidelines'
+character_text2 = 'You are an old western gunslinger and you love whiskey and poker, your sinature style is bluffing your opponet and playing hands that you probably shouldnt.'
+
+# Messages for the ChatGPT RPG instance
+CHATGPT_POKER_MESSAGES = [
+    {
+        "role": "system",
+
+        "content": "I want you to act as a poker player with the " + character_text2 + "personality. Given their personality please take the input of a poker game state and respond with how you would like to procede. ONLY RETURN IN ONE OF 3 WAYS. 1. [Call] 2. [Fold] 3. [Raise:x] (where x is the integer number of chips you are raising). Only return in exactly that format and remember to adhere to that response strictly."
+    }
+]
+
+def send_gamestate_to_chatgpt(game_state):
+
+    # Add user's last message to the chat array (context)
+    CHATGPT_POKER_MESSAGES.append(
+        {
+            "role" : "user",
+            "content" : game_state
+        }
+    )
+
+    # Generate next 'Assistant' response by giving ChatGPT the entire history
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=CHATGPT_POKER_MESSAGES,
+        max_tokens=2048
+    )
+
+    # Append newest response to the chat array (context)
+    message = completion.choices[0].message
+    CHATGPT_POKER_MESSAGES.append( message )
+
+    # Return the message text to the game loop / user
+    return message.content
+'''
+# Game Loop
+while game_running:
+
+    chatgpt_response = send_gamestate_to_chatgpt(user_input)
+    print("Game: ", chatgpt_response)
+
+    if user_input.lower() == "exit":
+        game_running = False
+'''
+
+
 import random
 from collections import Counter
 
@@ -108,6 +161,10 @@ class PokerGame:
         self.opponent_current_bet = 0
         self.hand_terminated = False
 
+    def get_gamestate(self):
+        gamestate = "your tokens: " + self.opponent_tokens + ", opponent tokens: " + self.player_tokens + ", total pot size: " + self.pot + ", opponent's current bet: " + self.player_current_bet + ", your cards: " + self.opponent_hand + ", current comunity cards: " + self.community_cards
+        return(gamestate)
+
     def reset_round(self):
         """Reset the game state for a new round, including blinds."""
         if self.player_tokens < 10 or self.opponent_tokens < 10:
@@ -214,9 +271,9 @@ class PokerGame:
             return "Fold"
 
         if self.opponent_current_bet < self.player_current_bet:
-            # Opponent must respond to the player's action
-            #decision = random.choice(["Call", "Raise", "Fold"]) Temp remove raise option
-            decision = random.choice(["Call", "Fold", "Call", "Call"])
+            chatgpt_response = send_gamestate_to_chatgpt(str(self.get_gamestate))
+            print("Game: ", chatgpt_response)
+            decision = chatgpt_response[1:-1]
             if decision == "Call":
                 call_amount = self.player_current_bet - self.opponent_current_bet
                 if call_amount > self.opponent_tokens:
@@ -228,23 +285,29 @@ class PokerGame:
                 self.pot += call_amount
                 print(f"Opponent calls {call_amount} tokens.")
                 return "Call"
-            elif decision == "Raise":
-                return self.opponent_raise()
+            elif decision.find(':') != -1:
+                raiseAmount = decision.split(':')
+                raiseAmountInt = int(raiseAmount[1])
+                return self.opponent_raise(raiseAmountInt)
             else:
                 print("Opponent folds.")
                 self.end_hand(winner="Player")
                 return "Fold"
         else:
-            # If bets are already equal, opponent decides to raise or Call
-            decision = random.choice(["Raise", "Call"])
-            if decision == "Raise":
-                return self.opponent_raise()
-            else:
+            chatgpt_response = send_gamestate_to_chatgpt(str(self.get_gamestate))
+            print("Game: ", chatgpt_response)
+            decision = chatgpt_response[1:-1]
+            if decision == "Call":
                 print("Opponent Calls")
                 return "Call"
+            elif decision == "Fold":
+                return "Fold"
+            else:
+                raiseAmount = decision.split(':')
+                raiseAmountInt = int(raiseAmount[1])
+                return self.opponent_raise(raiseAmountInt)
 
-    def opponent_raise(self):
-        """Handle opponent raising logic."""
+    def opponent_raise(self, raiseX):
         if self.hand_terminated:
             return "Fold"
 
@@ -255,7 +318,7 @@ class PokerGame:
             return "Fold"
 
         # Ensure the raise is valid
-        raise_amount = random.randint(min_raise, min(self.opponent_tokens, self.player_current_bet + 10))
+        raise_amount = raiseX
         additional_raise = raise_amount - self.opponent_current_bet
         self.opponent_tokens -= additional_raise
         self.opponent_current_bet = raise_amount
@@ -321,10 +384,12 @@ class PokerGame:
             while not self.hand_terminated:
                 player_action = self.player_action()
                 if player_action == "Fold":
+                    self.end_hand("Opponent")
                     return
 
                 opponent_action = self.opponent_action()
                 if opponent_action == "Fold":
+                    self.end_hand("Player")
                     return
 
                 if self.player_current_bet == self.opponent_current_bet:
