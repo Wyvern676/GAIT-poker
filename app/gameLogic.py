@@ -240,6 +240,7 @@ class PokerGame:
             if decision == "Raise":
                 return self.opponent_raise()
             else:
+                print("Opponent Calls")
                 return "Call"
 
     def opponent_raise(self):
@@ -318,10 +319,6 @@ class PokerGame:
             self.opponent_current_bet = 0
 
             while not self.hand_terminated:
-                if self.player_current_bet == self.opponent_current_bet and self.player_current_bet > 0:
-                    print("Bets are equal. Ending betting round.")
-                    break
-
                 player_action = self.player_action()
                 if player_action == "Fold":
                     return
@@ -329,6 +326,10 @@ class PokerGame:
                 opponent_action = self.opponent_action()
                 if opponent_action == "Fold":
                     return
+
+                if self.player_current_bet == self.opponent_current_bet:
+                    print("Bets are equal. Ending betting round.")
+                    break
 
         if not self.hand_terminated:
             print("Comparing hands...")
