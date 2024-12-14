@@ -84,3 +84,6 @@ yarn-error.log
 
 # Jupyter Notebook checkpoints (if applicable)
 .ipynb_checkpoints/
+.idea
+.venv
+node_modules
