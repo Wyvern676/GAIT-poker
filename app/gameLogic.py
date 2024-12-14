@@ -326,7 +326,7 @@ class PokerGame:
                 opponent_action = self.opponent_action()
                 if opponent_action == "Fold":
                     return
-                
+
                 if self.player_current_bet == self.opponent_current_bet:
                     print("Bets are equal. Ending betting round.")
                     break

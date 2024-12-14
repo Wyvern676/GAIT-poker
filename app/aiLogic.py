@@ -1,7 +1,6 @@
 from openai import OpenAI
 
 client = OpenAI(api_key="")
-
 # Globals
 user_input = "begin"
 game_running = True
@@ -422,3 +421,16 @@ class PokerGame:
 if __name__ == "__main__":
     game = PokerGame()
     game.play()
+=======
+completion = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {
+            "role": "user",
+            "content": "tell me a holloween joke."
+        }
+    ]
+)
+
+print(completion.choices[0].message)
