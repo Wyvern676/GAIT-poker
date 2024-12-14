@@ -4,15 +4,15 @@
 ```
 pip install jupyter
 ```
-- Next, run the command
+- Next, run the command to open the notebook:
 ```
 jupyter notebook
 ```
-To open the notebook.
-- Afterwards, insert
-  ```
-  pip install openai
-  ```
+
+- Afterwards, install openai in the cell below the code logic:
+```
+pip install openai
+```
 
 Then type in the command under that cell:
 ```
