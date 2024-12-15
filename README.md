@@ -1,6 +1,6 @@
 ### How to Run the GAIT Poker
 
-- First, do
+- First, install jupyter, if you haven't yet!
 ```
 pip install jupyter
 ```
