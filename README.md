@@ -19,7 +19,7 @@ pip install openai
 run gait.ipynb
 ```
 
-- Or if you launched it in the gaitwithmusic:
+**Or if you launched it in the gaitwithmusic:**
 
 ```
 run gaitwithmusic.ipynb
