@@ -9,7 +9,7 @@ pip install jupyter
 jupyter notebook
 ```
 
-- **(if you don't have this installed)** Afterwards, install openai in the cell below the code logic:
+- *(if you have this installed, you can skip this step)* Afterwards, install openai in the cell below the code logic:
 ```
 pip install openai
 ```
