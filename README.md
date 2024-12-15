@@ -14,16 +14,16 @@ jupyter notebook
 pip install openai
 ```
 
-Then type in the command under that cell:
+- Then type in the command under that cell:
 ```
 run gait.ipynb
 ```
 
-Or if you launched it in the gaitwithmusic:
+- Or if you launched it in the gaitwithmusic:
 
 ```
 run gaitwithmusic.ipynb
 ```
 
-To play the game!
+- To play the game! Enjoy!
 
