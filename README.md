@@ -14,7 +14,7 @@ jupyter notebook
 pip install openai
 ```
 
-- Before running the game, please find the section **#PASTE API KEYS HERE** and paste the code under it. We will provide you the code with the API Keys through the comments of our submission. It should essentially have keys with the following variables assigned:
+- Before running the game, please find the section **#PASTE API KEYS HERE** and paste your keys under it. It should essentially have keys with the following variables assigned:
 ```
 client =
 imageClient =
