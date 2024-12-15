@@ -18,5 +18,12 @@ Then type in the command under that cell:
 ```
 run gait.ipynb
 ```
+
+Or if you launched it in the gaitwithmusic:
+
+```
+run gaitwithmusic.ipynb
+```
+
 To play the game!
 
