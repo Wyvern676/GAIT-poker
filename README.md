@@ -9,7 +9,7 @@ pip install jupyter
 jupyter notebook
 ```
 
-- Afterwards, install openai in the cell below the code logic **(if you don't have this installed, otherwise, skip this step)**:
+- **(if you don't have this installed)** Afterwards, install openai in the cell below the code logic:
 ```
 pip install openai
 ```
@@ -19,3 +19,4 @@ Then type in the command under that cell:
 run gait.ipynb
 ```
 To play the game!
+
